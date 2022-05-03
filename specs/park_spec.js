@@ -7,9 +7,11 @@ describe('Park', function() {
   beforeEach(function () {
     park = new Park("Jurassic World", 100)
     dino1 = new Dinosaur("T-Rex", "Carnivore", 200)
-    dino2 = new Dinosaur("Triceratops", "Herbivore", 80)
-    dino3 = new Dinosaur("Raptor", "Carnivore", 100)
-
+    dino2 = new Dinosaur("Triceratops", "Herbivore", 80) 
+    dino3 = new Dinosaur("Velociraptor", "Carnivore", 100) 
+    dino4 = new Dinosaur("Diplodocus", "Herbivore", 140) 
+    dino5 = new Dinosaur("Spinosaurus", "Carnivore", 180) 
+    dino6 = new Dinosaur("Ankylosaurus", "Herbivore", 130) 
   })
 
   it('should have a name', function () {
@@ -51,14 +53,60 @@ describe('Park', function() {
     park.addDino(dino1)
     park.addDino(dino2)
     park.addDino(dino3)
+    park.addDino(dino4)
+    park.addDino(dino5)
+    park.addDino(dino6)
     const actual = park.findAllCarnivores()
-    assert.deepEqual(actual, ['T-Rex', 'Raptor'])
+    assert.deepEqual(actual, ['T-Rex', 'Velociraptor', 'Spinosaurus'])
   });
 
-  it('should be able to calculate the total number of visitors per day');
+  it('should be able to find all dinosaurs of a particular species', function () {
+    park.addDino(dino1)
+    park.addDino(dino2)
+    park.addDino(dino3)
+    park.addDino(dino4)
+    park.addDino(dino5)
+    park.addDino(dino6)
+    const actual = park.findAllHerbivores()
+    assert.deepEqual(actual, ['Triceratops', 'Diplodocus', 'Ankylosaurus'])
+  });
 
-  it('should be able to calculate the total number of visitors per year');
+  it('should be able to calculate the total number of visitors per day', function () {
+    park.addDino(dino1)
+    park.addDino(dino2)
+    park.addDino(dino3)
+    const actual = park.totalVisitorsPerDay()
+    assert.strictEqual(actual, 380)
+  });
 
-  it('should be able to calculate total revenue for one year');
 
-});
+  it('should be able to calculate the total number of visitors per year', function () {
+    park.addDino(dino1)
+    park.addDino(dino2)
+    park.addDino(dino3)
+    const actual = park.totalVisitorsPerYear()
+    assert.strictEqual(actual, 138700)
+  });
+
+  it('should be able to calculate total revenue for one year', function () {
+    park.addDino(dino1)
+    park.addDino(dino2)
+    park.addDino(dino3)
+    totalVisitors = park.totalVisitorsPerYear()
+    const actual = park.totalAnnualRevenue(totalVisitors)
+    assert.strictEqual(actual, 13870000)
+  });
+
+//   it('should be able to remove all dinos of a particular species', function () {
+//     park.addDino(dino1)
+//     park.addDino(dino2)
+//     park.addDino(dino3)
+//     park.addDino(dino4)
+//     park.addDino(dino5)
+//     park.addDino(dino6)
+//     const actual = park.removeAllCarnivores()
+//     assert.deepEqual(actual, ['Triceratops', 'Diplodocus', 'Ankylosaurus'])
+//   })
+
+})
+
