@@ -12,6 +12,8 @@ Park.prototype.getDinos = function () {
     return this.dinosaurs.length
 }
 
+
+
 Park.prototype.removeDino = function (dinosaur) {
     const findDinosaur = this.dinosaurs.indexOf(dinosaur)
     this.dinosaurs.splice(findDinosaur, 1)
@@ -20,42 +22,41 @@ Park.prototype.removeDino = function (dinosaur) {
 
 Park.prototype.whoAttractsMost = function () {
     const dinosAtPark = []
-    for (dinosaur of this.dinosaurs)
+    for (const dinosaur of this.dinosaurs)
     {
         dinosAtPark.push(dinosaur.guestsAttractedPerDay)
     }
     dinosAtPark.sort(function(a, b){return a-b})
     return dinosAtPark[2]
 }
+// a much easier way of doing the above
+// Park.prototype.findMostAttractiveDinosaur = function () {
+//     let mostAttractiveDino = this.dinosaurs[0];
+
+//     for (const dino of this.dinosaurs) {
+//       if (dino.guestsAttractedPerDay > mostAttractiveDino.guestsAttractedPerDay) {
+//         mostAttractiveDino = dino;
+//       }
+//     }
 
 
-Park.prototype.findAllCarnivores = function () {
-    const carnivores = []
-    for (dinosaur of this.dinosaurs)
+
+Park.prototype.findBySpecies = function (species) {
+    const foundDinos = []
+    for (const dinosaur of this.dinosaurs)
     {
-        if (dinosaur.diet === "Carnivore") 
+        if (dinosaur.species === species) 
         {
-            carnivores.push(dinosaur.species)
+            foundDinos.push(dinosaur.species)
         } 
     }
-    return carnivores
+    return foundDinos
 }
 
-Park.prototype.findAllHerbivores = function () {
-    const herbivores = []
-    for (dinosaur of this.dinosaurs)
-    {
-        if (dinosaur.diet === "Herbivore") 
-        {
-            herbivores.push(dinosaur.species)
-        } 
-    }
-    return herbivores
-}
 
 Park.prototype.totalVisitorsPerDay = function () {
     let total = 0
-    for (dinosaur of this.dinosaurs)
+    for (const dinosaur of this.dinosaurs)
     {
         total += dinosaur.guestsAttractedPerDay
     }
@@ -64,32 +65,47 @@ Park.prototype.totalVisitorsPerDay = function () {
 
 Park.prototype.totalVisitorsPerYear = function () {
     let total = 0
-    for (dinosaur of this.dinosaurs)
+    for (const dinosaur of this.dinosaurs)
     {
         total += dinosaur.guestsAttractedPerDay
     }
     return total * 365
 }
+// could just do this...
+// return this.totalVisitorsPerDay() * 365
 
-Park.prototype.totalAnnualRevenue = function (totalVisitors) {
-    totalRevenue = totalVisitors * this.ticketPrice
-    return totalRevenue
-    
+
+Park.prototype.totalAnnualRevenue = function () {
+    return this.totalVisitorsPerYear() * this.ticketPrice 
 }
 
-// Park.prototype.removeAllCarnivores = function () {
-    
-//     for (dinosaur of this.dinosaurs)
-//     {
-//         if (dinosaur.diet === "Carnivore") 
-//         {
-//             this.removeDino(dinosaur)
-//         } 
+Park.prototype.removeBySpecies = function (species) {
+    const newDinosaurs = []
+
+    for (const dinosaur of this.dinosaurs) {
+        if (dinosaur.species !== species) {
+        newDinosaurs.push(dinosaur);
+    }
+    }
+
+    this.dinosaurs = newDinosaurs;
+}
+
+
+// Park.prototype.numberOfDinosaursByDiet = function () {
+//     const numberOfDinosaursByDiet = {};
+
+//     for (const dinosaur of this.dinosaurs) {
+//       if (numberOfDinosaursByDiet[dinosaur.diet]) {
+//         numberOfDinosaursByDiet[dinosaur.diet] += 1;
+//       }
+//       else {
+//         numberOfDinosaursByDiet[dinosaur.diet] = 1;
+//       }
 //     }
-    
-// }
 
-
+//     return numberOfDinosaursByDiet;
+//   }
 
 
 

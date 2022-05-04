@@ -4,6 +4,13 @@ const Dinosaur = require('../models/dinosaur.js');
 
 describe('Park', function() {
   let park
+  let dino1
+  let dino2
+  let dino3
+  let dino4
+  let dino5
+  let dino6
+
   beforeEach(function () {
     park = new Park("Jurassic World", 100)
     dino1 = new Dinosaur("T-Rex", "Carnivore", 200)
@@ -26,8 +33,13 @@ describe('Park', function() {
 
   it('should have a collection of dinosaurs', function () {
     const actual = park.getDinos()
-    assert.deepEqual(actual, 0)
+    assert.deepStrictEqual(actual, 0)
   });
+// could also do it this way which is simpler, just return the list like you returned the name above
+// it('should have a collection of dinosaurs', function () {
+//     const actual = park.dinosaurs;
+//     assert.deepStrictEqual(actual, []);
+//   });
 
   it('should be able to add a dinosaur to its collection', function () {
     park.addDino(dino1)
@@ -56,19 +68,8 @@ describe('Park', function() {
     park.addDino(dino4)
     park.addDino(dino5)
     park.addDino(dino6)
-    const actual = park.findAllCarnivores()
-    assert.deepEqual(actual, ['T-Rex', 'Velociraptor', 'Spinosaurus'])
-  });
-
-  it('should be able to find all dinosaurs of a particular species', function () {
-    park.addDino(dino1)
-    park.addDino(dino2)
-    park.addDino(dino3)
-    park.addDino(dino4)
-    park.addDino(dino5)
-    park.addDino(dino6)
-    const actual = park.findAllHerbivores()
-    assert.deepEqual(actual, ['Triceratops', 'Diplodocus', 'Ankylosaurus'])
+    const actual = park.findBySpecies('T-Rex')
+    assert.deepEqual(actual, ['T-Rex'])
   });
 
   it('should be able to calculate the total number of visitors per day', function () {
@@ -92,21 +93,35 @@ describe('Park', function() {
     park.addDino(dino1)
     park.addDino(dino2)
     park.addDino(dino3)
-    totalVisitors = park.totalVisitorsPerYear()
-    const actual = park.totalAnnualRevenue(totalVisitors)
+    const actual = park.totalAnnualRevenue()
     assert.strictEqual(actual, 13870000)
   });
 
-//   it('should be able to remove all dinos of a particular species', function () {
-//     park.addDino(dino1)
-//     park.addDino(dino2)
-//     park.addDino(dino3)
-//     park.addDino(dino4)
-//     park.addDino(dino5)
-//     park.addDino(dino6)
-//     const actual = park.removeAllCarnivores()
-//     assert.deepEqual(actual, ['Triceratops', 'Diplodocus', 'Ankylosaurus'])
-//   })
+
+  it('should be able to remove all dinosaurs of a particular species', function () {
+    park.addDino(dino1)
+    park.addDino(dino2)
+    park.addDino(dino3)
+    park.addDino(dino4)
+    park.addDino(dino5)
+    park.addDino(dino6)
+    park.removeBySpecies('T-Rex')
+    const actual = park.getDinos()
+    assert.deepStrictEqual(actual, 5)
+  })
+
+  // it('should be able to calculate number of dinosaurs for each diet type', function () {
+  //   park.add(trex1);
+  //   park.add(trex2);
+  //   park.add(trex3);
+  //   park.add(velociraptor1);
+  //   park.add(velociraptor2);
+  //   park.add(diplodocus);
+  //   park.add(gallimimus);
+  //   const actual = park.numberOfDinosaursByDiet();
+  //   const expected = { carnivore: 5, herbivore: 1, omnivore: 1 };
+  //   assert.deepStrictEqual(actual, expected);
+  // });
+
 
 })
-
